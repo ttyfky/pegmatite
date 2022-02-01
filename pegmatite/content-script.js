@@ -77,7 +77,7 @@ function changeBackgroundColor(element, color, exist) {
 	}
 }
 
-function replaceElement(umlElem, srcUrl) {
+function appendElement(umlElem, srcUrl) {
 	var parent = umlElem.parentNode;
 	if (parent !== null) { // for asciidoc (div div pre)
 		var imgElem = document.createElement("img");
@@ -87,11 +87,11 @@ function replaceElement(umlElem, srcUrl) {
 		changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
 
 		imgElem.ondblclick = function() {
-			parent.replaceChild(umlElem, imgElem);
+			parent.append(imgElem);
 			changeBackgroundColor(parent, codePre.selfColor, codePre.exist);
 		};
 		umlElem.ondblclick = function() {
-			parent.replaceChild(imgElem, umlElem);
+			parent.append(imgElem);
 			changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
 		};
 	}
@@ -205,11 +205,11 @@ function onLoadAction(siteProfile, baseUrl){
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
-			replaceElement(replaceElem, plantUmlServerUrl);
+			appendElement(replaceElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
 			chrome.runtime.sendMessage({ "action": "plantuml", "url": plantUmlServerUrl }, function(dataUri) {
-				replaceElement(replaceElem, dataUri);
+				appendElement(replaceElem, dataUri);
 			});
 		}
 	});
@@ -228,11 +228,11 @@ function run(config) {
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
-			replaceElement(replaceElem, plantUmlServerUrl);
+			appendElement(replaceElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
 			chrome.runtime.sendMessage({ "action": "plantuml", "url": plantUmlServerUrl }, function(dataUri) {
-				replaceElement(replaceElem, dataUri);
+				appendElement(replaceElem, dataUri);
 			});
 		}
 	});
