@@ -83,7 +83,7 @@ function replaceElement(umlElem, srcUrl) {
 		var imgElem = document.createElement("img");
 		imgElem.setAttribute("src", escapeHtml(srcUrl));
 		imgElem.setAttribute("title", "");
-		parent.replaceChild(imgElem, umlElem);
+		parent.append(imgElem);
 		changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
 
 		imgElem.ondblclick = function() {
@@ -145,7 +145,7 @@ var siteProfiles = {
 		}
 	},
 	"bitbucket.org": {
-		"selector": "div.codehilite.language-plantuml > pre",
+		"selector": "pre",
 		"extract": function (elem) {
 			return elem.innerText.trim();
 		},
@@ -201,10 +201,10 @@ function loop(counter, retry, siteProfile, baseUrl){
 function onLoadAction(siteProfile, baseUrl){
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
 		var plantuml = siteProfile.extract(umlElem);
-		if (plantuml.substr(0, "@start".length) !== "@start") return;
+		if (plantuml.substr(0, "@startuml".length) !== "@startuml") return;
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
-		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
+		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
 			replaceElement(replaceElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
@@ -224,10 +224,10 @@ function run(config) {
 	}
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
 		var plantuml = siteProfile.extract(umlElem);
-		if (plantuml.substr(0, "@start".length) !== "@start") return;
+		if (plantuml.substr(0, "@startuml".length) !== "@startuml") return;
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
-		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL starts with "https"
+		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
 			replaceElement(replaceElem, plantUmlServerUrl);
 		} else {
 			// to avoid mixed-content
