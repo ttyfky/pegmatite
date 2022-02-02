@@ -85,15 +85,6 @@ function appendElement(umlElem, srcUrl) {
 		imgElem.setAttribute("title", "");
 		parent.append(imgElem);
 		changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
-
-		imgElem.ondblclick = function() {
-			parent.append(imgElem);
-			changeBackgroundColor(parent, codePre.selfColor, codePre.exist);
-		};
-		umlElem.ondblclick = function() {
-			parent.append(imgElem);
-			changeBackgroundColor(parent, codePre.parentColor, codePre.exist);
-		};
 	}
 }
 
