@@ -192,7 +192,7 @@ function loop(counter, retry, siteProfile, baseUrl){
 function onLoadAction(siteProfile, baseUrl){
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
 		var plantuml = siteProfile.extract(umlElem);
-		if (plantuml.substr(0, "@startuml".length) !== "@startuml") return;
+		if (plantuml.substr(0, "@start".length) !== "@start") return;
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
@@ -215,7 +215,7 @@ function run(config) {
 	}
 	[].forEach.call(document.querySelectorAll(siteProfile.selector), function (umlElem) {
 		var plantuml = siteProfile.extract(umlElem);
-		if (plantuml.substr(0, "@startuml".length) !== "@startuml") return;
+		if (plantuml.substr(0, "@start".length) !== "@start") return;
 		var plantUmlServerUrl = baseUrl + siteProfile.compress(umlElem);
 		var replaceElem = siteProfile.replace(umlElem);
 		if (plantUmlServerUrl.lastIndexOf("https", 0) === 0) { // if URL startumls with "https"
